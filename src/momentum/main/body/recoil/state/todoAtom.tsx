@@ -6,4 +6,8 @@ const todoListAtom = atom<Array<TodoModel>>({
   default: []
 });
 
-export { todoListAtom };
+const todoChange = atom<TodoModel>({
+  key: 'todoChangeAtom',
+  default: {} as TodoModel
+});
+export { todoListAtom, todoChange};

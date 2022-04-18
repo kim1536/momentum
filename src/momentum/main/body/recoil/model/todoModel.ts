@@ -1,4 +1,5 @@
 export interface TodoModel {
-  id: number;
+  id: string;
   content: string;
+  checked: boolean;
 }
