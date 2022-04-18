@@ -7,7 +7,6 @@ const Clock =  () => {
 
   useEffect(() => {
     setInterval(getClock,1000);
-    console.log("1렌더링");
   }, []);
 
   const getClock = () => {
@@ -16,14 +15,14 @@ const Clock =  () => {
     setMinutes(String(date.getMinutes()).padStart(2, "0"));
     setSeconds(String(date.getSeconds()).padStart(2, "0"));
   };
-
-  console.log("2렌더링");
   
   return (
     <>
-      <span>
-        {hours}:{minutes}:{seconds}
-      </span>
+      <div className="container-body">
+        <span style={{fontSize:"50px"}}>
+          {hours}:{minutes}:{seconds}
+        </span>
+      </div>
     </>
   );
 };
