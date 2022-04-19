@@ -42,22 +42,20 @@ const TodoList = () => {
   // 3 조회 rest api에 todo 삭제 요청.
   const todoDelete = async (id: string): Promise<void> => {
     await axios.delete(`${url}/${id}`, {});
-    setTodoContents((todoContents.filter((todo => todo.id !== id))));
+    setTodoContents(todoContents.filter((todo => todo.id !== id)));
     setSelectedIdx(-1);
   };
 
   const onToggle = (id: any, index: number) => {
-    console.log(todoContents);
-    setTodoContents((todoContentsArr) => {
-      let arr = todoContentsArr.map((xx, idx) => {
-        if (id === xx.id) {
-          xx.checked = true
-        }
-        return xx;
-      })
-      return arr
+    const x = todoContents.map((item) => {
+      if (item.id === id) {
+        return { ...item, checked: !item.checked };
+      }
+      else {
+        return item;
+      }
     });
-    setTodoContent({ ...todoContent, checked: true })
+    setTodoContents(x);
   };
 
   // 컨텐츠 내용 변경
@@ -70,6 +68,7 @@ const TodoList = () => {
   const todoEdit = (e: any, todoModel: TodoModel, index: number) => {
     e.preventDefault();
     e.stopPropagation();
+    debugger
     if (selectedIdx === -1) {
       clearInput();
       setTodoContent(() => {
@@ -112,12 +111,18 @@ const TodoList = () => {
                 return (
                   <tr key={todo.id} onClick={(e) => {
                     e.stopPropagation();
+                    e.preventDefault();
                     setSelectedIdx(idx);
                   }}>
+                    <>
+                      {
+                        console.log(todo.checked)
+                      }
+                    </>
                     <td width='150'>
                       <input
                         type='checkbox'
-                        className={todo.checked ? 'check' : 'uncheck'}
+                        // className={todo.checked ? 'check' : 'uncheck'}
                         checked={todo.checked}
                         onChange={(e) => {
                           e.preventDefault();
