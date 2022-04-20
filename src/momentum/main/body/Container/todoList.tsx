@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react';
 import { useRecoilState } from 'recoil';
 import { TodoModel } from '../recoil/model/todoModel';
 import { todoListAtom } from '../recoil/state/todoAtom';
+import './todoList.scss';
 
 const TodoList = () => {
   const url = 'http://localhost:4000/todo';
@@ -46,6 +47,7 @@ const TodoList = () => {
     setSelectedIdx(-1);
   };
 
+  // CheckBox 상태 감지
   const onToggle = (id: any, index: number) => {
     const x = todoContents.map((item) => {
       if (item.id === id) {
@@ -65,10 +67,9 @@ const TodoList = () => {
     setTodoContent(copyTodoContent);
   };
 
+  // 수정하기와 취소하는 이밴트 
   const todoEdit = (e: any, todoModel: TodoModel, index: number) => {
-    e.preventDefault();
-    e.stopPropagation();
-    debugger
+    e.nativeEvent.stopImmediatePropagation()
     if (selectedIdx === -1) {
       clearInput();
       setTodoContent(() => {
@@ -85,6 +86,7 @@ const TodoList = () => {
     };
   };
 
+  // 초기화
   const clearInput = () => {
     setTodoContent({ id: '', content: '', checked: false });
   };
@@ -105,15 +107,11 @@ const TodoList = () => {
         </form>
         {/* TODO List */}
         <div>
-          <table>
+          <table className='tableContainer'>
             <tbody>
               {todoContents?.map((todo, idx) => {
                 return (
-                  <tr key={todo.id} onClick={(e) => {
-                    e.stopPropagation();
-                    e.preventDefault();
-                    setSelectedIdx(idx);
-                  }}>
+                  <tr key={todo.id}>
                     <>
                       {
                         console.log(todo.checked)
@@ -122,11 +120,10 @@ const TodoList = () => {
                     <td width='150'>
                       <input
                         type='checkbox'
-                        // className={todo.checked ? 'check' : 'uncheck'}
+                        className={todo.checked ? 'check' : 'uncheck'}
                         checked={todo.checked}
                         onChange={(e) => {
-                          e.preventDefault();
-                          e.stopPropagation();
+                          e.nativeEvent.stopImmediatePropagation()
                           onToggle(todo.id, idx)
                         }}
                       />

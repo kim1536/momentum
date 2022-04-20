@@ -1,9 +1,12 @@
 @charset 'utf-8';
 
-.check {
+.tableContainer{
 
-}
-
-.uncheck {
-    
+  .check {
+    text-decoration : line-through
+  }
+  
+  .uncheck {
+    text-decoration : none
+  }
 }
